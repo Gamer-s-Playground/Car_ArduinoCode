@@ -5,32 +5,28 @@
 #define RIGHT_MOTOR_GO 11
 #define RIGHT_MOTOR_BACK 10
 
-#define RXD 3
-#define TXD 2
-#define KEY 4
+#define Tx 2
+#define Rx 3
 
-SoftwareSerial HC05(2, 3);
+SoftwareSerial BTSerial(Tx, Rx);
 
 char t;
 
 void setup() {
-  Serial.begin(115200);
-
   pinMode(LEFT_MOTOR_GO, OUTPUT);
   pinMode(LEFT_MOTOR_BACK, OUTPUT);
   pinMode(RIGHT_MOTOR_GO, OUTPUT);
   pinMode(RIGHT_MOTOR_BACK, OUTPUT);
 
-  pinMode(KEY, OUTPUT);
-  digitalWrite(KEY, HIGH);
-  HC05.begin(38400);
+  Serial.begin(9600);
+  BTSerial.begin(38400);
 }
 
 void loop() {
 
-  if(HC05.available()) {
-    t = HC05.read();
-    Serial.println(t);
+  if (BTSerial.available()) {
+    int a = BTSerial.read();
+    Serial.println(a);
   }
 
   // if(Serial.available()) {
@@ -38,30 +34,30 @@ void loop() {
   //   Serial.println(t);
   // }
 
-  if(t == 'F') { //move forward
-    digitalWrite(LEFT_MOTOR_GO, HIGH);
-    digitalWrite(RIGHT_MOTOR_GO, HIGH);
-  }
+  // if(t == 'F') { //move forward
+  //   digitalWrite(LEFT_MOTOR_GO, HIGH);
+  //   digitalWrite(RIGHT_MOTOR_GO, HIGH);
+  // }
 
-  else if(t == 'B') { //move reverse
-    digitalWrite(LEFT_MOTOR_BACK, HIGH);
-    digitalWrite(RIGHT_MOTOR_BACK, HIGH);
-  }
+  // else if(t == 'B') { //move reverse
+  //   digitalWrite(LEFT_MOTOR_BACK, HIGH);
+  //   digitalWrite(RIGHT_MOTOR_BACK, HIGH);
+  // }
 
-  else if(t == 'L') { //turn left
-    digitalWrite(RIGHT_MOTOR_GO, HIGH);
-  } 
+  // else if(t == 'L') { //turn left
+  //   digitalWrite(RIGHT_MOTOR_GO, HIGH);
+  // }
 
-  else if(t == 'R') { //turn right 
-    digitalWrite(LEFT_MOTOR_GO, HIGH);
-  }
+  // else if(t == 'R') { //turn right
+  //   digitalWrite(LEFT_MOTOR_GO, HIGH);
+  // }
 
-  else if(t == 'S') { //stop
-    digitalWrite(LEFT_MOTOR_GO, LOW);
-    digitalWrite(LEFT_MOTOR_BACK, LOW);
-    digitalWrite(RIGHT_MOTOR_GO, LOW);
-    digitalWrite(RIGHT_MOTOR_BACK, LOW);
-  }
-  
+  // else if(t == 'S') { //stop
+  //   digitalWrite(LEFT_MOTOR_GO, LOW);
+  //   digitalWrite(LEFT_MOTOR_BACK, LOW);
+  //   digitalWrite(RIGHT_MOTOR_GO, LOW);
+  //   digitalWrite(RIGHT_MOTOR_BACK, LOW);
+  // }
+
   delay(10);
 }
