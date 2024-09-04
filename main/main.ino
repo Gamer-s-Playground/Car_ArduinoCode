@@ -19,45 +19,46 @@ void setup() {
   pinMode(RIGHT_MOTOR_BACK, OUTPUT);
 
   Serial.begin(9600);
-  BTSerial.begin(38400);
+  BTSerial.begin(9600);
 }
 
 void loop() {
 
   if (BTSerial.available()) {
-    int a = BTSerial.read();
-    Serial.println(a);
+    t = BTSerial.read();
   }
 
-  // if(Serial.available()) {
-  //   t = Serial.read();
-  //   Serial.println(t);
-  // }
+  if(t == 'F') { //move forward
+    Serial.println("move forward");
+    controlMoter(1, 0, 1, 0);
+  }
 
-  // if(t == 'F') { //move forward
-  //   digitalWrite(LEFT_MOTOR_GO, HIGH);
-  //   digitalWrite(RIGHT_MOTOR_GO, HIGH);
-  // }
+  else if(t == 'B') { //move reverse
+    Serial.println("move reverse");
+    controlMoter(0, 1, 0, 1);
+  }
 
-  // else if(t == 'B') { //move reverse
-  //   digitalWrite(LEFT_MOTOR_BACK, HIGH);
-  //   digitalWrite(RIGHT_MOTOR_BACK, HIGH);
-  // }
+  else if(t == 'L') { //turn left
+    Serial.println("turn left");
+    controlMoter(0, 0, 1, 0);
+  }
 
-  // else if(t == 'L') { //turn left
-  //   digitalWrite(RIGHT_MOTOR_GO, HIGH);
-  // }
+  else if(t == 'R') { //turn right
+    Serial.println("turn right");
+    controlMoter(1, 0, 0, 0);
+  }
 
-  // else if(t == 'R') { //turn right
-  //   digitalWrite(LEFT_MOTOR_GO, HIGH);
-  // }
-
-  // else if(t == 'S') { //stop
-  //   digitalWrite(LEFT_MOTOR_GO, LOW);
-  //   digitalWrite(LEFT_MOTOR_BACK, LOW);
-  //   digitalWrite(RIGHT_MOTOR_GO, LOW);
-  //   digitalWrite(RIGHT_MOTOR_BACK, LOW);
-  // }
+  else if(t == 'S') { //stop
+    Serial.println("stop");
+    controlMoter(0, 0, 0, 0);
+  }
 
   delay(10);
+}
+
+void controlMoter(int a, int b, int c, int d) {
+  digitalWrite(LEFT_MOTOR_GO, a);
+  digitalWrite(LEFT_MOTOR_BACK, b);
+  digitalWrite(RIGHT_MOTOR_GO, c);
+  digitalWrite(RIGHT_MOTOR_BACK, d);
 }
